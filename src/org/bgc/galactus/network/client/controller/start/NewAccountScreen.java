@@ -1,5 +1,7 @@
-package org.bgc.galactus.network.client.controller;
+package org.bgc.galactus.network.client.controller.start;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,19 +14,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import org.bgc.galactus.network.client.controller.event.Login;
+import org.bgc.galactus.network.client.controller.start.event.NewAccount;
 
-public class ResetPassword {
-    private Stage primaryStage;
+public class NewAccountScreen {
+    private StartScreen startScreen;
     private Scene scene;
     private GridPane grid;
-    private Text notiFicationArea;
+    private Text notificationArea;
     private TextField userNameField;
     private PasswordField passwordField;
+    private PasswordField repeatPasswordField;
+    private TextField emailField;
 
-    ResetPassword(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public NewAccountScreen(StartScreen startScreen) {
+        this.startScreen = startScreen;
         makeGrid();
         title();
         loginForm();
@@ -33,9 +36,12 @@ public class ResetPassword {
         makeScene();
     }
 
-    void show (){
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void reset(){
+        notificationArea.setText("");
     }
 
     private void makeGrid() {
@@ -47,7 +53,7 @@ public class ResetPassword {
     }
 
     private void title() {
-        Text scenetitle = new Text("Welcome");
+        Text scenetitle = new Text("Create new Account");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
     }
@@ -64,11 +70,23 @@ public class ResetPassword {
 
         passwordField = new PasswordField();
         grid.add(passwordField, 1, 2);
+
+        Label repeatPassword = new Label("Repeat password:");
+        grid.add(repeatPassword, 0, 3);
+
+        repeatPasswordField = new PasswordField();
+        grid.add(repeatPasswordField, 1, 3);
+
+        Label email = new Label("E-mail:");
+        grid.add(email, 0, 4);
+
+        emailField = new TextField();
+        grid.add(emailField, 1, 4);
     }
 
     private void setNotificationArea() {
-        notiFicationArea = new Text();
-        grid.add(notiFicationArea, 1, 6);
+        notificationArea = new Text();
+        grid.add(notificationArea, 1, 5);
     }
 
     private void buttons() {
@@ -77,28 +95,51 @@ public class ResetPassword {
         loginBtn.setMinWidth(150);
         hbLoginBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbLoginBtn.getChildren().add(loginBtn);
-        grid.add(hbLoginBtn, 1, 4);
-        loginBtn.setOnAction(new Login(notiFicationArea, userNameField, passwordField));
+        grid.add(hbLoginBtn, 1, 6);
+        loginBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                startScreen.showLoginScreen();
+            }
+        });
 
         Button newAccountBtn = new Button("Create new account");
         HBox hbNewAccountBtn = new HBox(10);
         newAccountBtn.setMinWidth(150);
         hbNewAccountBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbNewAccountBtn.getChildren().add(newAccountBtn);
-        grid.add(hbNewAccountBtn, 1, 5);
-        newAccountBtn.setOnAction(new Login(notiFicationArea, userNameField, passwordField));
+        grid.add(hbNewAccountBtn, 1, 7);
+        newAccountBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                startScreen.showNewAccountScreen();
+            }
+        });
+
+        Button actionButton = new Button("Create");
+        HBox hbActionButton = new HBox(10);
+        actionButton.setMinWidth(150);
+        hbActionButton.setAlignment(Pos.BOTTOM_RIGHT);
+        hbActionButton.getChildren().add(actionButton);
+        grid.add(hbActionButton, 2, 4);
+        actionButton.setOnAction(new NewAccount(notificationArea, userNameField, passwordField, repeatPasswordField, emailField));
 
         Button resetPasswordBtn = new Button("Reset password");
         HBox hbResetPasswordBtn = new HBox(10);
         resetPasswordBtn.setMinWidth(150);
         hbResetPasswordBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbResetPasswordBtn.getChildren().add(resetPasswordBtn);
-        grid.add(hbResetPasswordBtn, 1, 6);
-        resetPasswordBtn.setOnAction(new Login(notiFicationArea, userNameField, passwordField));
+        grid.add(hbResetPasswordBtn, 1, 8);
+        resetPasswordBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                startScreen.showResetPasswordScreen();
+            }
+        });
     }
 
     private void makeScene() {
         //grid.setGridLinesVisible(true);
-        scene = new Scene(grid, 300, 275);
+        scene = new Scene(grid, 600, 400);
     }
 }
