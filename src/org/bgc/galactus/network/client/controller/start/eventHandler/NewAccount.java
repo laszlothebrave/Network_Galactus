@@ -1,4 +1,4 @@
-package org.bgc.galactus.network.client.controller.start.event;
+package org.bgc.galactus.network.client.controller.start.eventHandler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.bgc.galactus.network.client.controller.GUI;
 
 
 public class NewAccount implements EventHandler<ActionEvent> {
@@ -25,7 +26,13 @@ public class NewAccount implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        notificationArea.setFill(Color.BLACK);
-        notificationArea.setText("Creating new account");
+        if (passwordField.getText().equals(repeatPasswordFiled.getText())) {
+            notificationArea.setFill(Color.FIREBRICK);
+            notificationArea.setText("Creating new account");
+            GUI.client.newAccount(userNameField.getText(), passwordField.getText(), emailFiled.getText());
+        } else {
+            notificationArea.setFill(Color.FIREBRICK);
+            notificationArea.setText("Password not matching");
+        }
     }
 }

@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.bgc.galactus.network.client.controller.start.event.ResetPassword;
+import org.bgc.galactus.network.client.controller.start.eventHandler.ResetPassword;
 
 public class ResetPasswordScreen {
     private StartScreen startScreen;
@@ -73,7 +73,7 @@ public class ResetPasswordScreen {
         loginBtn.setMinWidth(150);
         hbLoginBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbLoginBtn.getChildren().add(loginBtn);
-        grid.add(hbLoginBtn, 1, 6);
+        grid.add(hbLoginBtn, 1, 3);
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -86,7 +86,7 @@ public class ResetPasswordScreen {
         newAccountBtn.setMinWidth(150);
         hbNewAccountBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbNewAccountBtn.getChildren().add(newAccountBtn);
-        grid.add(hbNewAccountBtn, 1, 7);
+        grid.add(hbNewAccountBtn, 1, 4);
         newAccountBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -107,7 +107,7 @@ public class ResetPasswordScreen {
         resetPasswordBtn.setMinWidth(150);
         hbResetPasswordBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbResetPasswordBtn.getChildren().add(resetPasswordBtn);
-        grid.add(hbResetPasswordBtn, 1, 8);
+        grid.add(hbResetPasswordBtn, 1, 5);
         resetPasswordBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -117,7 +117,7 @@ public class ResetPasswordScreen {
     }
 
     private void makeScene() {
-        //grid.setGridLinesVisible(true);
+        grid.setGridLinesVisible(true);
         scene = new Scene(grid, 600, 400);
     }
 }

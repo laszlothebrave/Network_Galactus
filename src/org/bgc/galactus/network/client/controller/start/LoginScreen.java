@@ -2,6 +2,7 @@ package org.bgc.galactus.network.client.controller.start;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,7 +15,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.bgc.galactus.network.client.controller.start.event.Login;
+import org.bgc.galactus.network.client.controller.start.event.LoginFailed;
+import org.bgc.galactus.network.client.controller.start.eventHandler.Login;
+import org.bgc.galactus.network.client.controller.start.eventHandler.LoginFailedHandler;
+
+import java.awt.event.MouseEvent;
 
 public class LoginScreen {
     private StartScreen startScreen;
@@ -51,7 +56,7 @@ public class LoginScreen {
     }
 
     private void title() {
-        Text scenetitle = new Text("Login to Galactus Network");
+        Text scenetitle = new Text("Login to Galactus");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
     }
@@ -81,7 +86,7 @@ public class LoginScreen {
         loginBtn.setMinWidth(150);
         hbLoginBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbLoginBtn.getChildren().add(loginBtn);
-        grid.add(hbLoginBtn, 1, 6);
+        grid.add(hbLoginBtn, 1, 5);
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -94,7 +99,7 @@ public class LoginScreen {
         newAccountBtn.setMinWidth(150);
         hbNewAccountBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbNewAccountBtn.getChildren().add(newAccountBtn);
-        grid.add(hbNewAccountBtn, 1, 7);
+        grid.add(hbNewAccountBtn, 1, 6);
         newAccountBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -115,7 +120,7 @@ public class LoginScreen {
         resetPasswordBtn.setMinWidth(150);
         hbResetPasswordBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbResetPasswordBtn.getChildren().add(resetPasswordBtn);
-        grid.add(hbResetPasswordBtn, 1, 8);
+        grid.add(hbResetPasswordBtn, 1, 7);
         resetPasswordBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -127,5 +132,6 @@ public class LoginScreen {
     private void makeScene() {
         //grid.setGridLinesVisible(true);
         scene = new Scene(grid, 600, 400);
+        scene.addEventHandler(LoginFailed.LOGIN_FAILED, new LoginFailedHandler(notificationArea));
     }
 }

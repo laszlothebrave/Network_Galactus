@@ -2,6 +2,7 @@ package org.bgc.galactus.network.client;
 
 
 
+import org.bgc.galactus.network.client.controller.GUI;
 import org.bgc.galactus.network.message.Message;
 import org.bgc.galactus.network.message.MsgAnnouncement;
 import org.bgc.galactus.network.message.MsgPrivateMessage;
@@ -14,7 +15,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Client{
+public class Client implements Runnable{
+    GUI gui;
     static int port;
     static boolean isRunning;
     static LinkedBlockingQueue linkedBlockingQueue;
@@ -26,84 +28,16 @@ public class Client{
     private static LinkedBlockingQueue<String> queue;
 
     public static void main (String[] args) throws InterruptedException {
-        initializeVariables();
-        console();
-        stop();
-    }
-
-    private static void initializeVariables() {
-        userName = new UserName("default username");
-        port = 13579;
-        isRunning = false;
-        linkedBlockingQueue = new LinkedBlockingQueue();
-        queue = new LinkedBlockingQueue<>();
-        clientListener = new ClientListener();
-        messageProcessorForClient = new MessageProcessorForClient();
-        keyboardIn = new BufferedReader(new InputStreamReader(System.in));
-        command = "null";
-    }
-
-    private static void console() {
-        System.out.println("client started");
-        System.out.println("Enter help for help");
-        do {
-            try {
-                command = keyboardIn.readLine();
-                switch (command) {
-                    case "start":
-                        start();
-                        break;
-                    case "stop":
-                        stop();
-                        break;
-                    case "restart":
-                        restart();
-                        break;
-                    case "status":
-                        status();
-                        break;
-                    case "port":
-                        port();
-                        break;
-                    case "in":
-                        logIn();
-                        break;
-                    case "out":
-                        logOut();
-                        break;
-                    case "msg":
-                        privateMessage();
-                        break;
-                    case "quit":
-                        break;
-                    case "help":
-                        help();
-                        break;
-                    case "newUser":
-                        newUser();
-                        break;
-                    case "info":
-                        info();
-                        break;
-                    case "listen":
-                        listen();
-                        break;
-                    default:
-                        System.out.println("Unknow command");
-                        break;
-                }
-            } catch (IOException e) {
-                System.out.println("Can't read from keyboard");
-                break;
-            }
-        } while ( !command.equals("quit") ) ;
     }
 
     private static void start() {
-        if (!isRunning) {
-            new Thread(clientListener).start();
-            new Thread(messageProcessorForClient).start();
-            isRunning = true;
+        isRunning = true;
+        while (isRunning) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -148,15 +82,6 @@ public class Client{
             port = Integer.parseInt(command);
         } catch (NullPointerException | NumberFormatException | IOException e) {
             System.out.println("Can't change port number");
-        }
-    }
-
-    private static void logIn() {
-        System.out.println("Enter username and password:");
-        try {
-           clientListener.send(new MsgLogin(keyboardIn.readLine(),keyboardIn.readLine()));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -209,5 +134,10 @@ public class Client{
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }*/
+    }
+
+    @Override
+    public void run() {
+
     }
 }

@@ -1,9 +1,15 @@
 package org.bgc.galactus.network.client.controller.start;
 
+import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.stage.Stage;
+import org.bgc.galactus.network.client.controller.GUI;
+import org.bgc.galactus.network.client.controller.start.event.LoginFailed;
+import org.bgc.galactus.network.client.controller.start.eventHandler.LoginFailedHandler;
 
 public class StartScreen {
-    Stage primaryStage;
+    private Stage primaryStage;
     private LoginScreen loginScreen;
     private NewAccountScreen newAccountScreen;
     private ResetPasswordScreen resetPasswordScreen;
@@ -13,6 +19,7 @@ public class StartScreen {
         loginScreen = new LoginScreen(this);
         newAccountScreen = new NewAccountScreen(this);
         resetPasswordScreen = new ResetPasswordScreen(this);
+        showLoginScreen();
     }
 
     public void showLoginScreen(){

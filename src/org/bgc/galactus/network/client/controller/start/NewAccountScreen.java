@@ -14,7 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.bgc.galactus.network.client.controller.start.event.NewAccount;
+import org.bgc.galactus.network.client.controller.start.event.LoginFailed;
+import org.bgc.galactus.network.client.controller.start.eventHandler.LoginFailedHandler;
+import org.bgc.galactus.network.client.controller.start.eventHandler.NewAccount;
 
 public class NewAccountScreen {
     private StartScreen startScreen;
@@ -53,7 +55,7 @@ public class NewAccountScreen {
     }
 
     private void title() {
-        Text scenetitle = new Text("Create new Account");
+        Text scenetitle = new Text("Create new account");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
     }

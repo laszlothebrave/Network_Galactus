@@ -1,4 +1,4 @@
-package org.bgc.galactus.network.client.controller.start.event;
+package org.bgc.galactus.network.client.controller.start.eventHandler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
